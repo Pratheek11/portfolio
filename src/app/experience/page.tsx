@@ -5,7 +5,7 @@ import Loading from "@/components/loader/loading";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function Page() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -19,7 +19,7 @@ export default function Home() {
         loading ? 
           <Loading/> 
         :
-          <p>Home</p>
+          <p>Experience</p>
       }
     </div>
   );
