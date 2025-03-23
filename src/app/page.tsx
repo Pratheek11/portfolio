@@ -1,26 +1,22 @@
 "use client";
 
+import Experience from "@/components/experience/page";
 import Header from "@/components/header/header";
-import Loading from "@/components/loader/loading";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Home from "@/components/home/page";
+import Socials from "@/components/socials/socials";
+import { createContext, useContext, useState } from "react";
+import Context, { PageContext } from "./pageContext";
 
-export default function Home() {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  },  [])
+export default function Page() {
+    let {page} = useContext(PageContext);
 
-  return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
-      {
-        loading ? 
-          <Loading/> 
-        :
-          <p>Home</p>
-      }
-    </div>
-  );
+    return (
+        <>
+            <Socials/>
+            <Header/>
+            <div className="bodyContent">
+                {page == 'Home' ?  <Home/> : <Experience/>}
+            </div>
+        </>
+    );
 }

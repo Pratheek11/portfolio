@@ -2,7 +2,7 @@ import { Tooltip } from 'primereact/tooltip';
 
 export default function Socials() {
     return (
-        <div className="flex flex-row pt-1.5 justify-around items-center h-5 w-full">
+        <div className="flex flex-row pt-1.5 justify-around items-center h-10 w-full">
             <span>
                 <a href="https://github.com/Pratheek11" target="#">
                     <i className="pi pi-github"></i>
