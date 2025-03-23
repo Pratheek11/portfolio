@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/header";
-import Socials from "@/components/socials/socials";
-import { PrimeReactProvider } from 'primereact/api';
+import Context from "./pageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
-        <Socials/>
-        <Header/>
-        <div className="bodyContent overflow-auto w-full">
-          <PrimeReactProvider>
+        <Context>
             {children}
-          </PrimeReactProvider>
-        </div>
+        </Context>
       </body>
     </html>
   );

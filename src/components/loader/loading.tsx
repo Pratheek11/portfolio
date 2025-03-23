@@ -1,4 +1,3 @@
-import Header from "@/components/header/header";
 import Image from "next/image";
 
 export default function Loading() {
@@ -9,7 +8,7 @@ export default function Loading() {
         src="/kubernetes.svg"
         height={200}
         width={200}
-        style={{animation: 'rotate 3s linear infinite'}}
+        style={{animation: 'rotate 1s linear infinite'}}
       />
       {/* <Image
         alt="loading..."

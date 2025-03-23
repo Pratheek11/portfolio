@@ -28,8 +28,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-size: revert;
+  font-weight: revert;
+}
+
 .bodyContent {
-  height: calc(100vh - 80px - 20px - 6px);
+  height: calc(100vh - 160px - 40px - 6px);
 }
 
 /* .p-dropdown {
@@ -48,12 +53,30 @@ body {
   padding: 0.25rem 1rem;
 }
 
+.activeExp {
+  outline: 0;
+  outline-offset: 0;
+  box-shadow: 0 0 0 .2rem #bfdbfe;
+  border: 1px solid;
+  border-color: #3b82f6;
+}
+
+.notActiveExp{
+  border: 1px solid;
+  border-color: #3b82f6;
+}
+
 @keyframes rotate {
-  from {
+  0% {
+    scale: 0;
     transform: rotate(0deg);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    scale: 1;
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(180deg);
   }
 }
 
@@ -64,4 +87,12 @@ body {
   100% {
     transform: scale(1);
   }
+}
+
+.before-emerald-300::before {
+  @apply absolute -left-8 rounded-4xl h-6 w-6 bg-emerald-300;
+}
+
+.before-gray-400::before {
+  @apply absolute -left-8 rounded-4xl h-6 w-6 bg-gray-400;
 }

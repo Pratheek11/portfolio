@@ -11,6 +11,7 @@
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.13.2",
     "@primeng/themes": "^19.0.9",
+    "devicons-react": "^1.4.0",
     "lottie-react": "^2.4.1",
     "next": "15.2.2",
     "primeicons": "^7.0.0",

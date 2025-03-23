@@ -1,0 +1,21 @@
+[
+    {
+        "company": "AT&T",
+        "fromTo": "Aug 2023",
+        "active": true,
+        "description": ["Developed and maintained internal applications used primarily by Network engineers",
+                        "Contributed to designing the UI and optimizing memory utilization of the Spring Boot app",
+                        "Built and deployed Docker images to AKS for efficient application management",
+                        "Integrated and migrated applications with various tools to streamline processes"],
+        "role": "Sr. Associate Application Developer",
+        "techUsed": []
+    },
+    {
+        "company": "AT&T",
+        "fromTo": "Jan 2023 - July 2023",
+        "active": false,
+        "description": ["Involved in learning Agile development and building web applications using tech stacks like Angular, SpringBoot"],
+        "role": "Technical Intern",
+        "techUsed": []
+    }
+]
