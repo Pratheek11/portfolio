@@ -11,12 +11,12 @@ export default function Page() {
     let {page} = useContext(PageContext);
 
     return (
-        <>
+        <div className="overflow-hidden">
             <Socials/>
             <Header/>
             <div className="bodyContent">
                 {page == 'Home' ?  <Home/> : <Experience/>}
             </div>
-        </>
+        </div>
     );
 }

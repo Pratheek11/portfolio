@@ -22,7 +22,7 @@ export default function Experience() {
           <div className="w-4/5 m-auto h-auto flex flex-col gap-10 relative before:absolute before:w-0.5 before:h-full before:left-5/10 before:-z-50 before:bg-blue-400">
             {experience.map(el => {
               return (
-                <div key={el.role} className={` relative z-50 bg-background w-full h-auto p-2 rounded-md shadow-sm ml-auto ${el.active ? 'activeExp' : 'notActiveExp'} `}>
+                <div key={el.role} className={` relative z-50 bg-background w-full h-auto p-2 rounded-md shadow-sm ml-auto ${el.active ? 'activeExp' : 'notActiveExp'} transform transition duration-250 hover:scale-110 `}>
                   {el.active ? 
                     <div className="absolute -left-7 rounded-4xl h-6 w-6 bg-background flex items-center justify-center">
                       <Image 
@@ -33,8 +33,9 @@ export default function Experience() {
                       />
                     </div>
                     :
-                    <div className="absolute -left-7 rounded-4xl h-6 w-6 bg-gray-400 flex items-center justify-center">
-                    </div>
+                    <></>
+                    // <div className="absolute -left-7 rounded-4xl h-6 w-6 bg-gray-400 flex items-center justify-center">
+                    // </div>
                   }
                   <p className="absolute -top-3 right-2 bg-background p-0.5">{el.fromTo}</p>
                   <div className="flex items-center">
