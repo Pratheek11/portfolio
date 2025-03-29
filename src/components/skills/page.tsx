@@ -12,15 +12,15 @@ export default function Skills() {
             <h3>Languages</h3>
           </div>
           <div className="flex items-center flex-wrap gap-2 justify-center">
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <JavaOriginal size="48" />
               <p>Java</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <JavascriptOriginal size="48" />
               <p>JavaScript</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <GoOriginal size="48" />
               <p>Go</p>
             </div>
@@ -31,27 +31,27 @@ export default function Skills() {
             <h3>Frameworks</h3>
           </div>
           <div className="flex items-center flex-wrap gap-2 justify-center">
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <ReactOriginal size="48" />
               <p>React</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <AngularOriginal size="48" />
               <p>Angular</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <SpringOriginal size="48" />
               <p>SpringBoot</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <KubernetesOriginal size="48" />
               <p>Kubernetes</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <DockerOriginal size="48" />
               <p>Docker</p>
             </div>
-            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm notActiveExp">
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <HelmOriginal size="48" />
               <p>Helm</p>
             </div>
