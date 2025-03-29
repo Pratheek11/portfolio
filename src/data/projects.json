@@ -1,0 +1,14 @@
+[
+    {
+        "title": "To-Do App",
+        "description": "Well, Everyone starts with to-do/hello world app so why not!, this is a to-do application built using react native.",
+        "tech": ["React", "ReactNative"],
+        "repo": "https://github.com/Pratheek11/to-do-app-reactNative"
+    },
+    {
+        "title": "Food App",
+        "description": "A food delivery app clone built using react native, all the states inside the app are managed using redux.",
+        "tech": ["React", "ReactNative", "Redux"],
+        "repo": "https://github.com/Pratheek11/food-app"
+    }
+]
