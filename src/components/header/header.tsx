@@ -42,12 +42,12 @@ export default function Header() {
     return (
         <div className="flex flex-row items-center justify-center h-40 w-full">
             <div className="flex flex-col justify-center items-center w-4/5">
-                <div className="flex items-center rounded-t-md bg-gray-500 w-full text-black">
+                <div className="flex items-center rounded-t-md bg-black w-full">
                     <i onClick={handleSudoMsg} className="pi pi-times scale-50 bg-red-600 rounded-xl p-1 cursor-pointer transform transition duration-250 hover:scale-65"></i>
                     <i onClick={handleSudoMsg} className="pi pi-minus scale-50 bg-yellow-400 rounded-xl p-1 cursor-pointer transform transition duration-250 hover:scale-65"></i>
                     <i onClick={handleSudoMsg} className="pi pi-arrow-up-right-and-arrow-down-left-from-center scale-50 bg-green-500 rounded-xl p-1 cursor-pointer transform transition duration-250 hover:scale-65"></i>
                 </div>
-                <div className="flex flex-col items-start  rounded-b-md bg-gray-200 w-full p-2 text-black">
+                <div className="flex flex-col items-start  rounded-b-md bg-[#414141] w-full p-2 text-[#ededed]">
                     <div className="flex items-center flex-wrap">
                         <i className="pi pi-dollar" style={{scale: 1.2}}></i> 
                         &nbsp;
