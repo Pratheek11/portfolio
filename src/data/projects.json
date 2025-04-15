@@ -10,5 +10,11 @@
         "description": "A food delivery app clone built using react native, all the states inside the app are managed using redux.",
         "tech": ["React", "ReactNative", "Redux"],
         "repo": "https://github.com/Pratheek11/food-app"
+    },
+    {
+        "title": "Websocket Microservices",
+        "description": "Developed a WebSocket service using Spring Boot and Go, comparing their performance and the amount of boilerplate code required for implementation.",
+        "tech": ["VanillaJS", "Spring-boot", "GO"],
+        "repo": "https://github.com/Pratheek11/webs-grpc"
     }
 ]
