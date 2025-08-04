@@ -35,7 +35,7 @@ export default function Home() {
                   <h1>Hey, I'm Pratheek  <span className="hover:animate-pulse hover:cursor-grab">👋</span></h1>
                 </div>
                 <div>
-                  <p>Software Engineer with 1+ years of experience in developing Web Applications, Micro-services and Kubernetes deployments.</p>
+                  <p>Software Engineer with 2+ years of experience in developing Web Applications, Micro-services and Kubernetes deployments.</p>
                 </div>
                 <div>
                   <p className="text-xs">
