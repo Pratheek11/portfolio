@@ -23,7 +23,7 @@ export default function Projects() {
         :
           <div className="w-4/5 m-auto h-auto flex flex-col gap-5">
             {projects.map(el => {return(
-              <div className="relative z-50 flex max-[380px]:flex-col max-[380px]:items-center max-[380px]:h-auto w-full h-25 border-[0.5px] border-gray-500 rounded-md p-1 m-0" key={el.title}>
+              <div className="relative z-50 flex text-center max-[380px]:flex-col max-[380px]:items-center max-[380px]:h-auto w-full h-auto border-[0.5px] border-gray-500 rounded-md p-1 m-0" key={el.title}>
                 <div className="absolute -top-5 -right-5 z-10 scale-80 transform transition duration-250 hover:scale-90">
                   <Button icon="pi pi-code" onClick={() =>  window.open(el.repo, '_blank')} rounded severity="secondary" aria-label="Filter" size="small"/>
                 </div>

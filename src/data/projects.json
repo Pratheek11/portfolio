@@ -1,11 +1,5 @@
 [
     {
-        "title": "To-Do App",
-        "description": "Well, Everyone starts with to-do/hello world app so why not!, this is a to-do application built using react native.",
-        "tech": ["React", "ReactNative"],
-        "repo": "https://github.com/Pratheek11/to-do-app-reactNative"
-    },
-    {
         "title": "Food App",
         "description": "A food delivery app clone built using react native, all the states inside the app are managed using redux.",
         "tech": ["React", "ReactNative", "Redux"],
@@ -16,5 +10,17 @@
         "description": "Developed a WebSocket service using Spring Boot and Go, comparing their performance and the amount of boilerplate code required for implementation.",
         "tech": ["VanillaJS", "Spring-boot", "GO"],
         "repo": "https://github.com/Pratheek11/webs-grpc"
+    },
+    {
+        "title": "Wordle React App",
+        "description": "Wordle is a popular word puzzle game where players have five attempts to guess a five-letter word. With each guess, the game provides feedback by highlighting letters in green, yellow, or gray — indicating correct placement, correct letter but wrong position, or incorrect letter, respectively. Its minimal design and brain-teasing simplicity game.",
+        "tech": ["React", "ReactNative", "SQLite", "Redux"],
+        "repo": "https://github.com/Pratheek11/wordle-app-react-native"
+    },
+    {
+        "title": "Personal Agent Using Llama3",
+        "description": "Developed a lightweight personal assistant application with integrated Email and Google Meet agents using LLaMA3 and LangChain. The assistant can summarize the user's day from emails and meetings and respond to general-purpose prompts.",
+        "tech": ["Langchain", "Llama3", "Agents", "Electron", "FastAPI"],
+        "repo": "https://github.com/Pratheek11/personalized-agents-using-llama3"
     }
 ]
