@@ -4,9 +4,10 @@
         "fromTo": "Aug 2023",
         "active": true,
         "description": ["Developed and maintained internal applications used primarily by Network engineers",
-                        "Contributed to designing the UI and optimizing memory utilization of the Spring Boot app",
+                        "Developed containerized Microservices using Spring-Boot, FastAPI.",
                         "Built and deployed Docker images to AKS for efficient application management",
-                        "Integrated and migrated applications with various tools to streamline processes"],
+                        "Integrated applications with CI/CD, APM tools to streamline development and maintenance processes.",
+                        "Developed AI workflows leveraging LangGraph, RAG and LLM."],
         "role": "Sr. Associate Application Developer",
         "techUsed": []
     },

@@ -1,6 +1,6 @@
 "use client";
 
-import { AngularOriginal, DockerOriginal, GoOriginal, HelmOriginal, JavaOriginal, JavascriptOriginal, KubernetesOriginal, ReactOriginal, SpringOriginal } from "devicons-react";
+import { AngularOriginal, DockerOriginal, GoOriginal, HelmOriginal, JavaOriginal, JavascriptOriginal, KubernetesOriginal, ReactOriginal, SpringOriginal, FastapiOriginal, PythonOriginal } from "devicons-react";
 
 export default function Skills() {
 
@@ -21,8 +21,8 @@ export default function Skills() {
               <p>JavaScript</p>
             </div>
             <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
-              <GoOriginal size="48" />
-              <p>Go</p>
+              <PythonOriginal size="48" />
+              <p>Python</p>
             </div>
           </div>
         </div>
@@ -54,6 +54,14 @@ export default function Skills() {
             <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
               <HelmOriginal size="48" />
               <p>Helm</p>
+            </div>
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
+              <FastapiOriginal size="48" />
+              <p>FastAPI</p>
+            </div>
+            <div className="flex items-center gap-1 p-2 rounded-md shadow-sm border-[0.5px] border-gray-500">
+              <PythonOriginal size="48" />
+              <p>LangChain/LangGraph</p>
             </div>
           </div>
         </div>

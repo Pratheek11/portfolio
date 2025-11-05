@@ -20,7 +20,7 @@ export default function Socials() {
             </span>
             <span className='transform transition duration-250 hover:scale-120'>
                 <Tooltip target=".tooltip" />
-                <a href="/PratheekFSDevops.pdf" data-pr-tooltip="Resume"  download target="#" className="tooltip">
+                <a href="/pratheek.pdf" data-pr-tooltip="Resume"  download target="#" className="tooltip">
                     <i className="pi pi-file"></i>
                 </a>
             </span>
