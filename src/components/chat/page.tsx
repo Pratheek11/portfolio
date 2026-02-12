@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use, useContext, useEffect, useRef, useState } from "react";
+import { createContext, Suspense, use, useContext, useEffect, useRef, useState } from "react";
 import { Button } from 'primereact/button';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { useSearchParams } from "next/navigation";
@@ -13,7 +13,7 @@ type Chat = {
     message: string;
 }
 
-export default function Chat() {
+function ChatContent() {
     const chatUtil = useRef(new ChatUtil()).current;
     const infoUtil = useRef(new InfoUtil()).current;
     const searchParams = useSearchParams();
@@ -131,5 +131,13 @@ export default function Chat() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function Chat() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ChatContent />
+        </Suspense>
     );
 }
