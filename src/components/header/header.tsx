@@ -18,10 +18,10 @@ const pages = [
 export default function Header() {
     let timer: NodeJS.Timeout;
     const [sudoMsg, setSudoMsg] = useState("");
-    let {page, setPage} = useContext(PageContext);
+    let {page, setState} = useContext(PageContext);
 
     const onSelectionChange = (e: DropdownChangeEvent) => {
-        setPage(e.value);
+        setState('page', e.value);
     }
 
     const handleSudoMsg = () => {
