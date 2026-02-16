@@ -22,15 +22,21 @@ function ChatContent() {
     let {page, ids, messages, setState} = useContext(PageContext);
     const [currentMessages, setCurrentMessages] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(false);
+    const open = typingMessage.startsWith("/");
 
     useEffect(() => {
     }, [id]);
 
-    const handleSendMessage = () => {
-        if(typingMessage.trim() === "") return;
+    const handleSendMessage = (message?: string) => {
+
+        const messageToSend = message ?? typingMessage;
+
+        console.log("Sending Message: " + messageToSend);
+
+        if(messageToSend.trim() === "") return;
         
         let updatedMessages: Chat[] = [];
-        const userMessage = {from: 'user', message: typingMessage};
+        const userMessage = {from: 'user', message: messageToSend};
         const botMessage = {from: 'bot', message: "..."};
         
         if(!id) {
@@ -49,12 +55,43 @@ function ChatContent() {
         }
         
         setTypingMessage("");
-        botResponse(updatedMessages);
+        botResponse(updatedMessages, messageToSend);
     }
 
-    const botResponse = async (updatedMessages: Chat[]) => {
+    const getResponseMessage = (response: string): string => {
+        let str: any = "";
+        if(response === chatUtil.GREET) {
+            str = chatUtil.greetBack[Math.floor(Math.random() * chatUtil.greetBack.length)];
+        }
+        if(response === chatUtil.ABOUT) {
+            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getAbout() }} />;
+        }
+        if(response === chatUtil.CONTACT) {
+            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getContact() }} />;
+        }
+        if(response === chatUtil.TRAINED) {
+            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getTrainedInfo() }} />;
+        }
+        if(response === chatUtil.SKILLS) {
+            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getSkills() }} />;
+        }
+        if(response === chatUtil.EXPERIENCE) {
+            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getExperience() }} />;
+        }
+        if(response === chatUtil.PROJECTS) {
+            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getProjects() }} />;
+        }
+        return str;
+    }
+
+    const handleShortcutClick = (shortcut: string) => {
+        setTypingMessage(shortcut);
+        handleSendMessage(shortcut);
+    }
+
+    const botResponse = async (updatedMessages: Chat[], message: string) => {
         setLoading(true);
-        let vec = await chatUtil.vectorizeMessage(typingMessage.toLowerCase());
+        let vec = await chatUtil.vectorizeMessage(message.toLowerCase());
         console.log("Message Vector: " + vec);
         let str: any = "";
         try {
@@ -124,10 +161,42 @@ function ChatContent() {
                     })
                 }
             </div>
-            <div className="w-full flex self-end items-center justify-center h-24">
+            <div className="w-full flex flex-col self-end items-center relative justify-center h-24">
+                {
+                    <div className={`
+                        w-1/2 flex justify-center
+                        absolute bottom-full
+                        transition-all duration-150 ease-out
+                        ${ open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0 pointer-events-none"}
+                    `}>
+                        <div className="w-[95%] bg-[#fff] rounded-2xl flex flex-col items-center max-h-50 overflow-auto" style={{border: '1px solid black', borderBottom: 0, borderRadius: '1rem 1rem 0 0'}}>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('About')} label="/about" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('Experience')} label="/experience" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('Projects')} label="/projects" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('Skills')} label="/skills" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('Contact')} label="/contact" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('Get me your Resume')} label="/resume" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                            <div className="w-full">
+                                <Button onClick={() => handleShortcutClick('How are you Trained ?')} label="/trained" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div className="border rounded-2xl flex items-center w-1/2 h-20 p-2">
-                    <InputTextarea placeholder="Type a message..." disabled={loading} value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)} className="w-full resize-none" style={{border: 'none', boxShadow: 'none', outline: 'none'}} />
-                    <Button icon="pi pi-arrow-up" onClick={handleSendMessage} disabled={loading} rounded aria-label="Send" size="small" style={{backgroundColor: 'black', outline: 'none', border: 'none', boxShadow: 'none'}}/>
+                    <InputTextarea placeholder="Type a message or /" disabled={loading} value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)} className="w-full resize-none" style={{border: 'none', boxShadow: 'none', outline: 'none'}} />
+                    <Button icon="pi pi-arrow-up" onClick={() => handleSendMessage()} disabled={loading} rounded aria-label="Send" size="small" style={{backgroundColor: 'black', outline: 'none', border: 'none', boxShadow: 'none'}}/>
                 </div>
             </div>
         </div>
