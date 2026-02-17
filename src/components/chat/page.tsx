@@ -133,7 +133,7 @@ function ChatContent() {
     }
 
     return (
-        <div className="h-full flex flex-col gap-4 items-center justify-center">
+        <div className="h-full flex flex-col gap-4 items-center justify-center relative">
             <div className={`w-full ${(id && currentMessages.length > 0) ? 'h-[calc(100%-96px)]' : 'h-10'} flex flex-col gap-6 items-center overflow-auto`}>
                 {
                     currentMessages.map((chat, index) => {
@@ -161,14 +161,22 @@ function ChatContent() {
                     })
                 }
             </div>
-            <div className="w-full flex flex-col self-end items-center relative justify-center h-24">
-                {
-                    <div className={`
-                        w-1/2 flex justify-center
-                        absolute bottom-full
-                        transition-all duration-150 ease-out
-                        ${ open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0 pointer-events-none"}
-                    `}>
+            <div className={`
+                    w-full relative flex justify-center h-24
+                    transition-all duration-300 ease-in-out
+                    ${currentMessages.length > 0 ? "translate-y-0" : "-translate-y-[50%]"}
+                    `}
+            >
+                    <div
+                        className={`
+                            absolute bottom-full w-1/2
+                            flex justify-center
+                            transition-all duration-150 ease-out
+                            ${open 
+                                ? "translate-y-0 opacity-100" 
+                                : "translate-y-2 opacity-0 pointer-events-none"}
+                        `}
+                    >
                         <div className="w-[95%] bg-[#fff] rounded-2xl flex flex-col items-center max-h-50 overflow-auto" style={{border: '1px solid black', borderBottom: 0, borderRadius: '1rem 1rem 0 0'}}>
                             <div className="w-full">
                                 <Button onClick={() => handleShortcutClick('About')} label="/about" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
@@ -186,15 +194,16 @@ function ChatContent() {
                                 <Button onClick={() => handleShortcutClick('Contact')} label="/contact" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
                             </div>
                             <div className="w-full">
-                                <Button onClick={() => handleShortcutClick('Get me your Resume')} label="/resume" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
+                                <Button onClick={() => handleShortcutClick('Get me Resume')} label="/resume" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
                             </div>
                             <div className="w-full">
                                 <Button onClick={() => handleShortcutClick('How are you Trained ?')} label="/trained" style={{background: 'transparent', width: '100%', border: 0, color: 'black', textAlign: 'left', borderBottom: '1px solid #ccc', borderRadius: 0, outline: 'none', boxShadow: 'none'}} />
                             </div>
                         </div>
                     </div>
-                }
-                <div className="border rounded-2xl flex items-center w-1/2 h-20 p-2">
+                <div
+                    className="w-1/2 border rounded-2xl flex items-center h-20 p-2 bg-white"
+                >
                     <InputTextarea placeholder="Type a message or /" disabled={loading} value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)} className="w-full resize-none" style={{border: 'none', boxShadow: 'none', outline: 'none'}} />
                     <Button icon="pi pi-arrow-up" onClick={() => handleSendMessage()} disabled={loading} rounded aria-label="Send" size="small" style={{backgroundColor: 'black', outline: 'none', border: 'none', boxShadow: 'none'}}/>
                 </div>
