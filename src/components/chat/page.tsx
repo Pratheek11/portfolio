@@ -136,7 +136,7 @@ function ChatContent() {
     return (
         <div className="h-full flex flex-col items-center justify-center relative">
             <div className={`${(id && currentMessages.length > 0) ? 'h-full' : 'h-10'} overflow-auto w-full flex justify-center`}>
-            <div className={`w-1/2 flex flex-col gap-6`}>
+            <div className="w-[80%] flex flex-col gap-6 md:w-[64%]">
                 {
                     currentMessages.map((chat, index) => {
                         return (
@@ -146,7 +146,7 @@ function ChatContent() {
                                         {chat.message}
                                     </div>
                                 ) : (
-                                    <div className={`bg-[#f1f1f1] text-black p-2 rounded-lg w-full break-words justify-self-start animate-slide-left 
+                                    <div className={` text-black p-2 rounded-lg w-full break-words justify-self-start animate-slide-left 
                                         ${typeof chat.message === "string" && chat.message.includes("I am not capable") ? 'bg-[#fe4747]' : ''}`}>
                                         {typeof chat.message === "string" && chat.message.toLowerCase().includes("resume") ? 
                                             <div className="flex items-center gap-2 ml-1">
@@ -199,7 +199,7 @@ function ChatContent() {
             >
                     <div
                         className={`
-                            absolute bottom-full w-1/2
+                            absolute bottom-full w-[80%] md:w-[64%]
                             flex justify-center
                             transition-all duration-150 ease-out
                             ${open 
@@ -232,7 +232,7 @@ function ChatContent() {
                         </div>
                     </div>
                 <div
-                    className="w-1/2 border rounded-2xl flex items-center h-20 p-2 bg-white"
+                    className="w-[80%] md:w-[64%] border rounded-2xl flex items-center h-20 p-2 bg-white"
                 >
                     <InputTextarea placeholder="Type a message or /" disabled={loading} value={typingMessage} onChange={(e) => setTypingMessage(e.target.value)} className="w-full resize-none" style={{border: 'none', boxShadow: 'none', outline: 'none'}} />
                     <Button icon="pi pi-arrow-up" onClick={() => handleSendMessage()} disabled={loading} rounded aria-label="Send" size="small" style={{backgroundColor: 'black', outline: 'none', border: 'none', boxShadow: 'none'}}/>
