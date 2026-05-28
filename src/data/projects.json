@@ -1,25 +1,25 @@
 [
     {
         "title": "Food App",
-        "description": "A food delivery app clone built using react native, all the states inside the app are managed using redux.",
+        "description": "A food delivery app clone built using React Native\n\n- All states inside the app are managed using Redux\n- Fully functional mobile application",
         "tech": ["React", "ReactNative", "Redux"],
         "repo": "https://github.com/Pratheek11/food-app"
     },
     {
         "title": "Websocket Microservices",
-        "description": "Developed a WebSocket service using Spring Boot and Go, comparing their performance and the amount of boilerplate code required for implementation.",
+        "description": "Developed a WebSocket service using Spring Boot and Go\n\n- Performance comparison between Spring Boot and Go\n- Analysis of boilerplate code required for each implementation\n- Optimized for real-time communication",
         "tech": ["VanillaJS", "Spring-boot", "GO"],
         "repo": "https://github.com/Pratheek11/webs-grpc"
     },
     {
         "title": "Wordle React App",
-        "description": "Wordle is a popular word puzzle game where players have five attempts to guess a five-letter word. With each guess, the game provides feedback by highlighting letters in green, yellow, or gray — indicating correct placement, correct letter but wrong position, or incorrect letter, respectively. Its minimal design and brain-teasing simplicity game.",
+        "description": "Wordle is a popular word puzzle game where players have five attempts to guess a five-letter word.\n\n**Game Mechanics:**\n- Green: Correct placement\n- Yellow: Correct letter but wrong position\n- Gray: Incorrect letter\n\nMinimal design and brain-teasing simplicity",
         "tech": ["React", "ReactNative", "SQLite", "Redux"],
         "repo": "https://github.com/Pratheek11/wordle-app-react-native"
     },
     {
         "title": "Personal Agent Using Llama3",
-        "description": "Developed a lightweight personal assistant application with integrated Email and Google Meet agents using LLaMA3 and LangChain. The assistant can summarize the user's day from emails and meetings and respond to general-purpose prompts.",
+        "description": "Developed a lightweight personal assistant application with integrated Email and Google Meet agents using LLaMA3 and LangChain\n\n**Features:**\n- Summarize user's day from emails and meetings\n- Respond to general-purpose prompts\n- Intelligent agent orchestration",
         "tech": ["Langchain", "Llama3", "Agents", "Electron", "FastAPI"],
         "repo": "https://github.com/Pratheek11/personalized-agents-using-llama3"
     }

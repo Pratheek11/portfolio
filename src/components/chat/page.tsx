@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { PageContext } from "@/app/pageContext";
 import ChatUtil from "@/utils/ChatUtil";
 import InfoUtil from "@/utils/InfoUtil";
+import ReactMarkdown from 'react-markdown';
         
 type Chat = {
     from: string;
@@ -105,22 +106,22 @@ function ChatContent() {
             str = chatUtil.greetBack[Math.floor(Math.random() * chatUtil.greetBack.length)];
         }
         if(str === chatUtil.ABOUT) {
-            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getAbout() }} />;
+            str = infoUtil.getAbout();
         }
         if(str === chatUtil.CONTACT) {
-            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getContact() }} />;
+            str = infoUtil.getContact();
         }
         if(str === chatUtil.TRAINED) {
-            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getTrainedInfo() }} />;
+            str = infoUtil.getTrainedInfo();
         }
         if(str === chatUtil.SKILLS) {
-            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getSkills() }} />;
+            str = infoUtil.getSkills();
         }
         if(str === chatUtil.EXPERIENCE) {
-            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getExperience() }} />;
+            str = infoUtil.getExperience();
         }
         if(str === chatUtil.PROJECTS) {
-            str = <div dangerouslySetInnerHTML={{ __html: infoUtil.getProjects() }} />;
+            str = infoUtil.getProjects();
         }
         setTimeout(() => {
             updatedMessages.pop();
@@ -133,18 +134,19 @@ function ChatContent() {
     }
 
     return (
-        <div className="h-full flex flex-col gap-4 items-center justify-center relative">
-            <div className={`w-full ${(id && currentMessages.length > 0) ? 'h-[calc(100%-96px)]' : 'h-10'} flex flex-col gap-6 items-center overflow-auto`}>
+        <div className="h-full flex flex-col items-center justify-center relative">
+            <div className={`${(id && currentMessages.length > 0) ? 'h-full' : 'h-10'} overflow-auto w-full flex justify-center`}>
+            <div className={`w-1/2 flex flex-col gap-6`}>
                 {
                     currentMessages.map((chat, index) => {
                         return (
-                            <div key={index} className="w-[80%]">
+                            <div key={index} className="w-full">
                                 {chat.from === 'user' ? (
-                                    <div className="bg-black text-white p-2 rounded-lg w-max max-w-1/2 break-words justify-self-end animate-slide-right">
+                                    <div className="bg-black text-white p-2 rounded-lg w-max break-words justify-self-end animate-slide-right">
                                         {chat.message}
                                     </div>
                                 ) : (
-                                    <div className={`bg-[#f1f1f1] text-black p-2 rounded-lg w-max max-w-2/3 break-words animate-slide-left 
+                                    <div className={`bg-[#f1f1f1] text-black p-2 rounded-lg w-full break-words justify-self-start animate-slide-left 
                                         ${typeof chat.message === "string" && chat.message.includes("I am not capable") ? 'bg-[#fe4747]' : ''}`}>
                                         {typeof chat.message === "string" && chat.message.toLowerCase().includes("resume") ? 
                                             <div className="flex items-center gap-2 ml-1">
@@ -152,19 +154,47 @@ function ChatContent() {
                                                 <Button icon="pi pi-download" rounded text aria-label="Download Resume" onClick={() => window.open('/PratheekBJ.pdf', '_blank')} />
                                             </div>
                                             : 
-                                            chat.message
+                                            typeof chat.message === "string" ? (
+                                                <div className="prose prose-sm max-w-none text-black">
+                                                    <ReactMarkdown 
+                                                        components={{
+                                                            h1: ({node, ...props}) => <h1 className="text-lg font-bold my-2" {...props} />,
+                                                            h2: ({node, ...props}) => <h2 className="text-base font-bold my-2" {...props} />,
+                                                            h3: ({node, ...props}) => <h3 className="text-sm font-bold my-1" {...props} />,
+                                                            ul: ({node, ...props}) => <ul className="list-disc ml-4 my-2" {...props} />,
+                                                            ol: ({node, ...props}) => <ol className="list-decimal ml-4 my-2" {...props} />,
+                                                            li: ({node, ...props}) => <li className="my-1" {...props} />,
+                                                            a: ({node, ...props}) => <a className="text-blue-500 underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                                                            p: ({node, ...props}) => <p className="my-2" {...props} />,
+                                                            strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
+                                                            em: ({node, ...props}) => <em className="italic" {...props} />,
+                                                        }}
+                                                    >
+                                                        {chat.message}
+                                                    </ReactMarkdown>
+                                                </div>
+                                            ) : (
+                                                chat.message
+                                            )
                                         }
                                     </div>
                                 )}
+                                { (index === currentMessages.length - 1) ?
+                                    <div className="w-full h-26">
+                                    </div>
+                                    :
+                                    null
+                                }
                             </div>
                         )
                     })
                 }
             </div>
+            </div>
             <div className={`
-                    w-full relative flex justify-center h-24
+                    w-full fixed flex justify-center h-24
                     transition-all duration-300 ease-in-out
-                    ${currentMessages.length > 0 ? "translate-y-0" : "-translate-y-[50%]"}
+                    ${currentMessages.length > 0 ? "bottom-0" : "bottom-[50%]"}
                     `}
             >
                     <div
