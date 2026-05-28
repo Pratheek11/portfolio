@@ -3,11 +3,7 @@
         "company": "AT&T",
         "fromTo": "Aug 2023",
         "active": true,
-        "description": ["Developed and maintained internal applications used primarily by Network engineers",
-                        "Developed containerized Microservices using Spring-Boot, FastAPI.",
-                        "Built and deployed Docker images to AKS for efficient application management",
-                        "Integrated applications with CI/CD, APM tools to streamline development and maintenance processes.",
-                        "Developed AI workflows leveraging LangGraph, RAG and LLM."],
+        "description": ["- Developed and maintained internal applications used primarily by Network engineers\n- Developed containerized Microservices using Spring-Boot, FastAPI\n- Built and deployed Docker images to AKS for efficient application management\n- Integrated applications with CI/CD, APM tools to streamline development and maintenance processes\n- Developed AI workflows leveraging LangGraph, RAG and LLM"],
         "role": "Sr. Associate Application Developer",
         "techUsed": []
     },
@@ -15,7 +11,7 @@
         "company": "AT&T",
         "fromTo": "Jan 2023 - July 2023",
         "active": false,
-        "description": ["Involved in building web applications for the internal use for the company using tech stacks like Angular, SpringBoot, Docker. And was able to learn about few things like Agile development, Gained foundational understanding of DevOps practices"],
+        "description": ["- Involved in building web applications for the internal use for the company using Angular, SpringBoot, Docker\n- Learned Agile development methodologies\n- Gained foundational understanding of DevOps practices\n- Cloud deployment strategies"],
         "role": "Technical Intern",
         "techUsed": []
     }
