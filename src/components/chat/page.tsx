@@ -24,9 +24,35 @@ function ChatContent() {
     const [currentMessages, setCurrentMessages] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(false);
     const open = typingMessage.startsWith("/");
+    const [typingResponse, setTypingResponse] = useState("");
+    const typingIntervalRef = useRef<number | null>(null);
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-    }, [id]);
+        return () => {
+            if (typingIntervalRef.current !== null) {
+                window.clearInterval(typingIntervalRef.current);
+            }
+        };
+    }, []);
+
+    const scrollToBottom = (smooth = true) => {
+        const container = messagesContainerRef.current;
+        if (container) {
+            // prefer scrolling the container to avoid scrolling the whole page
+            try {
+                container.scrollTo({ top: container.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
+            } catch (e) {
+                container.scrollTop = container.scrollHeight;
+            }
+            return;
+        }
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'end' });
+        }
+    };
+
 
     const handleSendMessage = (message?: string) => {
 
@@ -39,6 +65,7 @@ function ChatContent() {
         let updatedMessages: Chat[] = [];
         const userMessage = {from: 'user', message: messageToSend};
         const botMessage = {from: 'bot', message: "..."};
+        setTypingResponse("...");
         
         if(!id) {
             const newId = crypto.randomUUID();
@@ -56,6 +83,8 @@ function ChatContent() {
         }
         
         setTypingMessage("");
+        // ensure scroll to new message
+        setTimeout(() => scrollToBottom(false), 0);
         botResponse(updatedMessages, messageToSend);
     }
 
@@ -127,15 +156,44 @@ function ChatContent() {
             updatedMessages.pop();
             const updatedList = [...updatedMessages, {from: 'bot', message: str || "Hello! 😀"}]
             setCurrentMessages(updatedList);
+            // update stored messages
             setState('messages', new Map(messages.set(id!, updatedList)));
+            // scroll then start typing effect
+            setTimeout(() => scrollToBottom(true), 0);
+            typingEffect(str);
             setTypingMessage("");
-            setLoading(false);
         }, 2000);
+    }
+
+    const typingEffect = (message: string) => {
+        if (typingIntervalRef.current !== null) {
+            window.clearInterval(typingIntervalRef.current);
+        }
+
+        const words = message.split(" ");
+        let index = 0;
+        setTypingResponse("");
+
+        typingIntervalRef.current = window.setInterval(() => {
+            const nextIndex = Math.min(index + 2, words.length);
+            setTypingResponse(words.slice(0, nextIndex).join(' '));
+            // scroll as typing progresses
+            setTimeout(() => scrollToBottom(true), 0);
+            index = nextIndex;
+
+            if (index >= words.length) {
+                if (typingIntervalRef.current !== null) {
+                    window.clearInterval(typingIntervalRef.current);
+                    typingIntervalRef.current = null;
+                }
+                setLoading(false);
+            }
+        }, 120);
     }
 
     return (
         <div className="h-full flex flex-col items-center justify-center relative">
-            <div className={`${(id && currentMessages.length > 0) ? 'h-full' : 'h-10'} overflow-auto w-full flex justify-center`}>
+            <div ref={messagesContainerRef} className={`${(id && currentMessages.length > 0) ? 'h-full' : 'h-10'} overflow-auto w-full flex justify-center`}>
             <div className="w-[80%] flex flex-col gap-6 md:w-[64%]">
                 {
                     currentMessages.map((chat, index) => {
@@ -170,7 +228,7 @@ function ChatContent() {
                                                             em: ({node, ...props}) => <em className="italic" {...props} />,
                                                         }}
                                                     >
-                                                        {chat.message}
+                                                        {index === currentMessages.length - 1 ? typingResponse : chat.message}
                                                     </ReactMarkdown>
                                                 </div>
                                             ) : (
@@ -190,6 +248,7 @@ function ChatContent() {
                     })
                 }
             </div>
+                <div ref={messagesEndRef} />
             </div>
             <div className={`
                     w-full fixed flex justify-center h-24
