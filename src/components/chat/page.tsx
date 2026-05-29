@@ -8,6 +8,7 @@ import { PageContext } from "@/app/pageContext";
 import ChatUtil from "@/utils/ChatUtil";
 import InfoUtil from "@/utils/InfoUtil";
 import ReactMarkdown from 'react-markdown';
+import useBatchedTyping from '@/hooks/useBatchedTyping';
         
 type Chat = {
     from: string;
@@ -24,9 +25,50 @@ function ChatContent() {
     const [currentMessages, setCurrentMessages] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(false);
     const open = typingMessage.startsWith("/");
+    const [/*typingResponse*/, /*setTypingResponse*/] = useState("");
+    const typingIntervalRef = useRef<number | null>(null); // left for compatibility if needed
+    const { displayed: typingDisplayed, isTyping, start: startTyping, stop: stopTyping } = useBatchedTyping();
+    const TYPING_BATCH_SIZE = 2;
+    const TYPING_DELAY = 120;
+    const [typingTargetIndex, setTypingTargetIndex] = useState<number | null>(null);
+    const [typingFinalText, setTypingFinalText] = useState<string | null>(null);
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-    }, [id]);
+        return () => {
+            if (typingIntervalRef.current !== null) {
+                window.clearInterval(typingIntervalRef.current);
+            }
+            stopTyping();
+        };
+    }, []);
+
+    // keep container scrolled when size changes
+    useEffect(() => {
+        const container = messagesContainerRef.current;
+        if (!container || typeof ResizeObserver === 'undefined') return;
+        const ro = new ResizeObserver(() => scrollToBottom(true));
+        ro.observe(container);
+        return () => ro.disconnect();
+    }, [messagesContainerRef.current]);
+
+    const scrollToBottom = (smooth = true) => {
+        const container = messagesContainerRef.current;
+        if (container) {
+            // prefer scrolling the container to avoid scrolling the whole page
+            try {
+                container.scrollTo({ top: container.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
+            } catch (e) {
+                container.scrollTop = container.scrollHeight;
+            }
+            return;
+        }
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'end' });
+        }
+    };
+
 
     const handleSendMessage = (message?: string) => {
 
@@ -39,12 +81,15 @@ function ChatContent() {
         let updatedMessages: Chat[] = [];
         const userMessage = {from: 'user', message: messageToSend};
         const botMessage = {from: 'bot', message: "..."};
+        // setTypingResponse("...");
         
         if(!id) {
             const newId = crypto.randomUUID();
             updatedMessages = [userMessage, botMessage];
             setState('ids', [...ids, newId]);
-            setState('messages', new Map(messages.set(newId, updatedMessages)));
+            const newMap = new Map(messages);
+            newMap.set(newId, updatedMessages);
+            setState('messages', newMap);
             setCurrentMessages(updatedMessages);
             const url = new URL(window.location.href);
             url.searchParams.set('id', newId);
@@ -52,10 +97,17 @@ function ChatContent() {
         } else {
             updatedMessages = [...currentMessages, userMessage, botMessage];
             setCurrentMessages(updatedMessages);
-            setState('messages', new Map(messages.set(id, updatedMessages)));
+            const newMap = new Map(messages);
+            newMap.set(id!, updatedMessages);
+            setState('messages', newMap);
         }
         
         setTypingMessage("");
+        // ensure scroll to new message
+        // stop any ongoing typing bound to previous message
+        stopTyping();
+        setTypingTargetIndex(null);
+        setTimeout(() => scrollToBottom(false), 0);
         botResponse(updatedMessages, messageToSend);
     }
 
@@ -125,25 +177,58 @@ function ChatContent() {
         }
         setTimeout(() => {
             updatedMessages.pop();
-            const updatedList = [...updatedMessages, {from: 'bot', message: str || "Hello! 😀"}]
+            // insert placeholder bot message; the real text will be applied when typing finishes
+            const updatedList = [...updatedMessages, {from: 'bot', message: '...'}]
             setCurrentMessages(updatedList);
-            setState('messages', new Map(messages.set(id!, updatedList)));
+            // update stored messages immutably
+            const newMap = new Map(messages);
+            newMap.set(id!, updatedList);
+            setState('messages', newMap);
+            // scroll then start typing effect
+            setTimeout(() => scrollToBottom(true), 0);
+            // mark which message index will receive the typing overlay and save final text
+            const targetIndex = updatedList.length - 1;
+            setTypingTargetIndex(targetIndex);
+            setTypingFinalText(String(str ?? ""));
+            startTyping(String(str ?? ""), TYPING_BATCH_SIZE, TYPING_DELAY);
             setTypingMessage("");
-            setLoading(false);
         }, 2000);
     }
+    // typingEffect removed in favor of `useBatchedTyping` hook
+    useEffect(() => {
+        // When displayed typing changes, ensure scrolling keeps up
+        scrollToBottom(true);
+        if (!isTyping) {
+            setLoading(false);
+            // typing finished: apply final text (if available) to the target message, then clear target
+            if (typingTargetIndex !== null && typingFinalText !== null) {
+                const updated = [...currentMessages];
+                if (updated[typingTargetIndex]) {
+                    updated[typingTargetIndex] = { ...updated[typingTargetIndex], message: typingFinalText };
+                    setCurrentMessages(updated);
+                    const newMap = new Map(messages);
+                    newMap.set(id!, updated);
+                    setState('messages', newMap);
+                }
+                setTypingFinalText(null);
+                setTypingTargetIndex(null);
+            } else {
+                setTypingTargetIndex(null);
+            }
+        }
+    }, [typingDisplayed, isTyping]);
 
     return (
         <div className="h-full flex flex-col items-center justify-center relative">
-            <div className={`${(id && currentMessages.length > 0) ? 'h-full' : 'h-10'} overflow-auto w-full flex justify-center`}>
+            <div ref={messagesContainerRef} className={`${(id && currentMessages.length > 0) ? 'h-full' : 'h-10'} overflow-auto w-full flex justify-center`}>
             <div className="w-[80%] flex flex-col gap-6 md:w-[64%]">
                 {
                     currentMessages.map((chat, index) => {
                         return (
                             <div key={index} className="w-full">
                                 {chat.from === 'user' ? (
-                                    <div className="bg-black text-white p-2 rounded-lg w-max break-words justify-self-end animate-slide-right">
-                                        {chat.message}
+                                    <div className="flex flex-col justify-end bg-black text-white p-2 rounded-lg w-max break-words justify-self-end animate-slide-right">
+                                        <p>{chat.message}</p>
                                     </div>
                                 ) : (
                                     <div className={` text-black p-2 rounded-lg w-full break-words justify-self-start animate-slide-left 
@@ -170,7 +255,7 @@ function ChatContent() {
                                                             em: ({node, ...props}) => <em className="italic" {...props} />,
                                                         }}
                                                     >
-                                                        {chat.message}
+                                                        {typingTargetIndex !== null && index === typingTargetIndex ? (typingDisplayed || chat.message) : chat.message}
                                                     </ReactMarkdown>
                                                 </div>
                                             ) : (
@@ -190,6 +275,8 @@ function ChatContent() {
                     })
                 }
             </div>
+                    <div role="status" aria-live="polite" className="sr-only">{typingDisplayed}</div>
+                    <div ref={messagesEndRef} />
             </div>
             <div className={`
                     w-full fixed flex justify-center h-24
