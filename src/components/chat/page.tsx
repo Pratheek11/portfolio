@@ -241,22 +241,35 @@ function ChatContent() {
                                             : 
                                             typeof chat.message === "string" ? (
                                                 <div className="prose prose-sm max-w-none text-black">
-                                                    <ReactMarkdown 
-                                                        components={{
-                                                            h1: ({node, ...props}) => <h1 className="text-lg font-bold my-2" {...props} />,
-                                                            h2: ({node, ...props}) => <h2 className="text-base font-bold my-2" {...props} />,
-                                                            h3: ({node, ...props}) => <h3 className="text-sm font-bold my-1" {...props} />,
-                                                            ul: ({node, ...props}) => <ul className="list-disc ml-4 my-2" {...props} />,
-                                                            ol: ({node, ...props}) => <ol className="list-decimal ml-4 my-2" {...props} />,
-                                                            li: ({node, ...props}) => <li className="my-1" {...props} />,
-                                                            a: ({node, ...props}) => <a className="text-blue-500 underline" target="_blank" rel="noopener noreferrer" {...props} />,
-                                                            p: ({node, ...props}) => <p className="my-2" {...props} />,
-                                                            strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
-                                                            em: ({node, ...props}) => <em className="italic" {...props} />,
-                                                        }}
-                                                    >
-                                                        {typingTargetIndex !== null && index === typingTargetIndex ? (typingDisplayed || chat.message) : chat.message}
-                                                    </ReactMarkdown>
+                                                    {(() => {
+                                                        const isTypingTarget = typingTargetIndex !== null && index === typingTargetIndex;
+                                                        const renderedText = isTypingTarget ? (typingDisplayed || chat.message) : chat.message;
+                                                        const showTypingDots = renderedText === '...' && chat.message === '...';
+                                                        return showTypingDots ? (
+                                                            <span className="inline-flex items-center gap-1">
+                                                                <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+                                                                <span className="w-2 h-2 rounded-full bg-black opacity-70 animate-pulse" style={{ animationDelay: '0.15s' }} />
+                                                                <span className="w-2 h-2 rounded-full bg-black opacity-40 animate-pulse" style={{ animationDelay: '0.3s' }} />
+                                                            </span>
+                                                        ) : (
+                                                            <ReactMarkdown 
+                                                                components={{
+                                                                    h1: ({node, ...props}) => <h1 className="text-lg font-bold my-2" {...props} />,
+                                                                    h2: ({node, ...props}) => <h2 className="text-base font-bold my-2" {...props} />,
+                                                                    h3: ({node, ...props}) => <h3 className="text-sm font-bold my-1" {...props} />,
+                                                                    ul: ({node, ...props}) => <ul className="list-disc ml-4 my-2" {...props} />,
+                                                                    ol: ({node, ...props}) => <ol className="list-decimal ml-4 my-2" {...props} />,
+                                                                    li: ({node, ...props}) => <li className="my-1" {...props} />,
+                                                                    a: ({node, ...props}) => <a className="text-blue-500 underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                                                                    p: ({node, ...props}) => <p className="my-2" {...props} />,
+                                                                    strong: ({node, ...props}) => <strong className="font-bold" {...props} />,
+                                                                    em: ({node, ...props}) => <em className="italic" {...props} />,
+                                                                }}
+                                                            >
+                                                                {renderedText}
+                                                            </ReactMarkdown>
+                                                        );
+                                                    })()}
                                                 </div>
                                             ) : (
                                                 chat.message
