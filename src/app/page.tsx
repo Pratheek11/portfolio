@@ -14,7 +14,7 @@ export default function Page() {
     let { page } = useContext(PageContext);
 
     return (
-        <div className="overflow-hidden h-full">
+        <div className="overflow-hidden h-full bg-[#f8f8f6]">
             <div className="w-full h-[10%]">
                 <Socials />
             </div>
